@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send | Data</title>
+    <style>
+        *{
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            direction: rtl;
+        }
+        body{
+            padding: 10px;
+            background-color: rgb(248, 248, 248);
+        }
+        label{
+            font-weight: bold;
+        }
+        /* Styles for the input element */
+        input , textarea {
+        width: 70%;
+        padding: 10px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        outline: none;
+        transition: border-color 0.3s;
+        }
+
+        /* Style when the input is focused */
+        input:focus {
+        border-color: #007BFF; /* Change to your desired focus color */
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle box shadow on focus */
+        }
+        textarea:focus {
+        border-color: #007BFF; /* Change to your desired focus color */
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle box shadow on focus */
+        }
+        input[type="submit"]{
+            border: none;
+        }
+        .form{
+            background-color: white;
+            text-align: center;
+            margin-top: 100px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 0.5px solid black;
+        }
+
+    </style>
+</head>
+<body>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase.js"></script>
+<!-- Initialize Firebase Realtime Database -->
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyD410-OHL_P1vVEDpKcQaR3jPOcjqSwBjI",
+        authDomain: "work-1bc43.firebaseapp.com",
+        databaseURL: "https://work-1bc43-default-rtdb.firebaseio.com",
+        projectId: "work-1bc43",
+        storageBucket: "work-1bc43.appspot.com",
+        messagingSenderId: "161305954826",
+        appId: "1:161305954826:web:aa9e1488a4d62d788d6df3",
+        measurementId: "G-VH43K0Y1GE"
+    };
+  
+    firebase.initializeApp(firebaseConfig);
+    var database = firebase.database();
+  </script>
+  
+  <!-- Create the Form -->
+  <form class="form" id="myForm">
+    <label for="day">اسم اليوم:</label>
+    <input type="text" id="day" name="day" required><br>
+  
+    <label for="date">التاريخ:</label>
+    <input type="date" id="date" name="date" required><br>
+  
+    <label for="paragraph">الفقرة:</label>
+    <textarea id="paragraph" name="paragraph" rows="4" required></textarea><br>
+  
+    <input type="submit" value="إرسال">
+  </form>
+  
+  <!-- JavaScript to Handle Form Submission -->
+  <script>
+    const form = document.getElementById('myForm');
+  
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission
+  
+      const day = form.day.value;
+      const date = form.date.value;
+      const paragraph = form.paragraph.value;
+  
+      // Push the data to Firebase Realtime Database
+      firebase.database().ref('formData').push({
+        day: day,
+        date: date,
+        paragraph: paragraph
+      }, function(error) {
+        if (error) {
+          console.error('Data could not be saved.' + error);
+        } else {
+          alert('Data submitted successfully!');
+          form.reset(); // Clear the form after submission
+        }
+      });
+    });
+  </script>
+  
+      
+      
+
+</body>
+</html>
