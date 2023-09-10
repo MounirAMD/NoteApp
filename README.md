@@ -1,2 +1,0 @@
-# NoteApp
-Note app
